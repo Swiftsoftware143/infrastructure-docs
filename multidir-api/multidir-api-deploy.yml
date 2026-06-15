@@ -1,0 +1,57 @@
+---
+version: "2.0"
+
+services:
+  multidir-api:
+    image: your-registry/multidir-api:latest
+    expose:
+      - port: 8080
+        as: 80
+        to:
+          - global: true
+    env:
+      - DATABASE_URL={{DATABASE_URL}}
+      - REDIS_URL={{REDIS_URL}}
+      - MEILI_URL={{MEILI_URL}}
+      - MEILI_KEY={{MEILI_KEY}}
+      - RUST_LOG=info
+      - PORT=8080
+    params:
+      storage:
+        data:
+          mount: /app/data
+          readOnly: false
+
+profiles:
+  compute:
+    multidir-api:
+      resources:
+        cpu:
+          units: 2
+        memory:
+          size: 4Gi
+        storage:
+          - size: 10Gi
+          - name: data
+            size: 10Gi
+            attributes:
+              persistent: true
+              class: beta3
+
+  placement:
+    dcloud:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+      pricing:
+        multidir-api:
+          denom: uakt
+          amount: 5000
+
+deployment:
+  dcloud:
+    dcloud:
+      profile: dcloud
+      count: 1
