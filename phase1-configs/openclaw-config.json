@@ -1,0 +1,33 @@
+{
+  "llm": {
+    "provider": "litellm",
+    "base_url": "http://llm-proxy:8080",
+    "api_key": "{{LITELLM_KEY}}",
+    "model": "llama3.1-70b",
+    "fallback_model": "llama3.1-8b",
+    "timeout": 120,
+    "max_tokens": 4096,
+    "temperature": 0.7
+  },
+  "n8n": {
+    "webhook_url": "https://n8n.{{DOMAIN}}/webhook",
+    "api_key": "{{N8N_API_KEY}}",
+    "host": "n8n.{{DOMAIN}}"
+  },
+  "database": {
+    "url": "postgresql://postgres:{{SUPABASE_PASSWORD}}@{{SUPABASE_PROJECT}}.supabase.co:5432/postgres",
+    "pool_size": 10
+  },
+  "redis": {
+    "url": "redis://default:{{REDIS_PASSWORD}}@{{REDIS_HOST}}:6379"
+  },
+  "credits": {
+    "enabled": true,
+    "default_credits": 0,
+    "cost_per_1k_tokens": 0.001
+  },
+  "server": {
+    "port": 3000,
+    "host": "0.0.0.0"
+  }
+}

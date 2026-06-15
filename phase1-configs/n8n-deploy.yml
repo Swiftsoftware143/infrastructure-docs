@@ -1,0 +1,72 @@
+---
+version: "2.0"
+
+services:
+  n8n:
+    image: n8nio/n8n:latest
+    expose:
+      - port: 5678
+        as: 80
+        to:
+          - global: true
+    env:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD={{N8N_PASSWORD}}
+      - N8N_HOST=n8n.{{DOMAIN}}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://n8n.{{DOMAIN}}/
+      - GENERIC_TIMEZONE=America/New_York
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST={{SUPABASE_PROJECT}}.supabase.co
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=postgres
+      - DB_POSTGRESDB_USER=postgres
+      - DB_POSTGRESDB_PASSWORD={{SUPABASE_PASSWORD}}
+      - N8N_AI_ENABLED=true
+      - N8N_AI_PROVIDER=ollama
+      - N8N_AI_OLLAMA_BASE_URL=http://llm-proxy:8080
+      - EXECUTIONS_MODE=regular
+      - EXECUTIONS_TIMEOUT=300
+      - EXECUTIONS_TIMEOUT_MAX=3600
+    params:
+      storage:
+        data:
+          mount: /home/node/.n8n
+          readOnly: false
+
+profiles:
+  compute:
+    n8n:
+      resources:
+        cpu:
+          units: 2
+        memory:
+          size: 4Gi
+        storage:
+          - size: 5Gi
+          - name: data
+            size: 20Gi
+            attributes:
+              persistent: true
+              class: beta3
+
+  placement:
+    dcloud:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+      pricing:
+        n8n:
+          denom: uakt
+          amount: 5000
+
+deployment:
+  dcloud:
+    dcloud:
+      profile: dcloud
+      count: 1

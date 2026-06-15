@@ -1,0 +1,85 @@
+---
+version: "2.0"
+
+services:
+  openclaw:
+    image: openclaw/openclaw:latest
+    expose:
+      - port: 3000
+        as: 80
+        to:
+          - global: true
+    env:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:{{SUPABASE_PASSWORD}}@{{SUPABASE_PROJECT}}.supabase.co:5432/postgres
+      - REDIS_URL=redis://default:{{REDIS_PASSWORD}}@{{REDIS_HOST}}:6379
+      - LLM_PROVIDER=ollama
+      - LLM_URL=http://llm-proxy:8080
+      - LLM_API_KEY={{LITELLM_KEY}}
+      - N8N_WEBHOOK_URL=https://n8n.{{DOMAIN}}/webhook
+      - JWT_SECRET={{JWT_SECRET}}
+      - ENCRYPTION_KEY={{ENCRYPTION_KEY}}
+    params:
+      storage:
+        data:
+          mount: /data
+          readOnly: false
+
+  llm-proxy:
+    image: litellm/litellm:latest
+    expose:
+      - port: 8080
+        as: 8080
+        to:
+          - service: openclaw
+    env:
+      - LITELLM_MASTER_KEY={{LITELLM_KEY}}
+      - MODEL_NAME=llama3.1:70b
+      - OLLAMA_API_BASE=http://{{VAST_IP}}:11434
+      - LITELLM_LOG_LEVEL=INFO
+
+profiles:
+  compute:
+    openclaw:
+      resources:
+        cpu:
+          units: 2
+        memory:
+          size: 4Gi
+        storage:
+          - size: 10Gi
+          - name: data
+            size: 20Gi
+            attributes:
+              persistent: true
+              class: beta3
+    llm-proxy:
+      resources:
+        cpu:
+          units: 1
+        memory:
+          size: 2Gi
+        storage:
+          size: 5Gi
+
+  placement:
+    dcloud:
+      attributes:
+        host: akash
+      signedBy:
+        anyOf:
+          - "akash1365yvmc4s7awdyj3n2sav7xfx76adc6dnmlx63"
+          - "akash18qa2a2ltfyvkyj0ggj3hkvuj6twzyumuaru9s4"
+      pricing:
+        openclaw:
+          denom: uakt
+          amount: 5000
+        llm-proxy:
+          denom: uakt
+          amount: 2000
+
+deployment:
+  dcloud:
+    dcloud:
+      profile: dcloud
+      count: 1

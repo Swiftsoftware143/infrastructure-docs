@@ -1,0 +1,52 @@
+# LiteLLM Proxy Configuration
+# This connects to your Vast.ai Ollama instance
+
+model_list:
+  - model_name: llama3.1-70b
+    litellm_params:
+      model: ollama/llama3.1:70b
+      api_base: http://{{VAST_IP}}:11434
+      timeout: 120
+      stream_timeout: 120
+
+  - model_name: llama3.1-8b
+    litellm_params:
+      model: ollama/llama3.1:8b
+      api_base: http://{{VAST_IP}}:11434
+      timeout: 60
+      stream_timeout: 60
+
+  - model_name: qwen2.5-72b
+    litellm_params:
+      model: ollama/qwen2.5:72b
+      api_base: http://{{VAST_IP}}:11434
+      timeout: 120
+      stream_timeout: 120
+
+  - model_name: mistral-7b
+    litellm_params:
+      model: ollama/mistral:7b
+      api_base: http://{{VAST_IP}}:11434
+      timeout: 60
+      stream_timeout: 60
+
+# General settings
+litellm_settings:
+  drop_params: true
+  set_verbose: false
+  num_retries: 3
+  request_timeout: 120
+  telemetry: false
+
+# Rate limiting (optional)
+# router_settings:
+#   routing_strategy: simple-shuffle
+#   model_group_alias:
+#     gpt-4: llama3.1-70b
+
+# Logging (optional)
+# callbacks: ["otel", "prometheus"]
+
+# Budget management (optional)
+# max_budget: 100
+# budget_duration: 30d
