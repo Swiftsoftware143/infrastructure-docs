@@ -55,6 +55,127 @@ Before starting, ensure you have:
 
 ---
 
+## Funding Requirements (Crypto Needed)
+
+### Akash Network (AKT Tokens)
+
+**What is AKT?**
+- Native cryptocurrency of Akash Network
+- Used to pay for compute resources
+- Similar to AWS credits, but decentralized
+
+**How to Get AKT:**
+
+| Method | Steps | Time |
+|--------|-------|------|
+| **Coinbase** | Buy AKT → Withdraw to Akash wallet | 10 min |
+| **Kraken** | Buy AKT → Withdraw to Akash wallet | 10 min |
+| **Binance** | Buy AKT → Withdraw to Akash wallet | 10 min |
+| **Akash Console** | Pay with credit card (they convert) | 5 min |
+
+**How Much You Need:**
+- Initial deployment: ~10 AKT (~$5-10)
+- Monthly running cost: ~50-100 AKT (~$25-50)
+
+**Recommended:** Start with 100 AKT (~$50)
+
+### Vast.ai (GPU Rental)
+
+**Payment Options:**
+
+| Method | Currency | Notes |
+|--------|----------|-------|
+| **Credit Card** | USD | Easiest, instant |
+| **USDC** | Crypto | If you prefer crypto |
+| **USDT** | Crypto | Stablecoin option |
+| **ETH** | Crypto | Converted to USD |
+
+**How Much You Need:**
+- RTX 4090 GPU: ~$0.40-0.80/hour
+- Monthly (24/7): ~$300-600
+- Monthly (12hr/day): ~$150-300
+
+**Recommended:** Start with $100 credit
+
+### Cost Summary
+
+| Component | Crypto | Monthly Cost |
+|-----------|--------|--------------|
+| Akash (OpenClaw + n8n) | AKT | ~$10-15 |
+| Vast.ai (LLM GPU) | USD/USDC | ~$150-300 |
+| Supabase (Database) | USD | Free-$25 |
+| **Total** | | **$160-340** |
+
+**vs Current:** $200-600/month
+**Savings:** $40-260/month + 100% AI credit revenue
+
+### Alternative: No Crypto Option
+
+If you prefer to avoid crypto entirely:
+
+| Component | Alternative | Cost |
+|-----------|-------------|------|
+| Akash → | Hetzner Cloud | $10-20/month |
+| Vast.ai → | RunPod (credit card) | $50-100/month |
+
+**Trade-off:** Lose decentralized benefits, keep traditional hosting
+
+---
+
+## Step 0: Get Funded (Do This First)
+
+---
+
+### Step 0a: Get AKT Tokens
+
+**Option 1: Coinbase (Recommended)**
+1. Create/login to Coinbase account
+2. Buy AKT (minimum $50 recommended)
+3. Go to "Send/Receive"
+4. Select AKT
+5. Enter your Akash wallet address (from Step 0b)
+6. Send
+
+**Option 2: Akash Console (Easiest)**
+1. Go to https://console.akash.network
+2. Sign up with email
+3. Click "Add Funds"
+4. Pay with credit card
+5. They handle AKT conversion automatically
+
+**Option 3: Other Exchanges**
+- Kraken: Buy AKT → Withdraw
+- Binance: Buy AKT → Withdraw
+- KuCoin: Buy AKT → Withdraw
+
+### Step 0b: Create Akash Wallet
+
+```bash
+# Install Akash CLI first (see Step 1)
+# Then create wallet
+
+akash keys add deployer
+
+# Save the mnemonic phrase securely!
+# This is your wallet backup
+
+# Get your address
+akash keys show deployer -a
+# Copy this address for funding
+```
+
+### Step 0c: Fund Vast.ai
+
+1. Go to https://vast.ai
+2. Create account
+3. Go to "Billing"
+4. Add payment method:
+   - Credit card (easiest)
+   - Or crypto (USDC/USDT/ETH)
+5. Add $100 credit to start
+
+---
+
 ## Step 1: Install Akash CLI
 
 ```bash
