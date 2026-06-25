@@ -1,0 +1,100 @@
+{
+  "theme": "dark",
+  "archetype": "4 - Swiss & High-Contrast (Custom Dark Variant)",
+  "branding": {
+    "name": "SwiftImpact ADA Console",
+    "logo_type": "text",
+    "logo_text": "SwiftImpact Solutions",
+    "logo_style": "text-xl font-black tracking-tight text-white"
+  },
+  "colors": {
+    "background": "#0f1117",
+    "sidebar": "#1a1d27",
+    "cards": "#1e2130",
+    "accent": "#007bff",
+    "success": "#10b981",
+    "danger": "#ef4444",
+    "text_primary": "#f8fafc",
+    "text_secondary": "#94a3b8",
+    "text_muted": "#64748b",
+    "border": "#2e3245",
+    "border_hover": "#3e445e"
+  },
+  "typography": {
+    "headings": "Outfit",
+    "body": "Inter",
+    "rules": {
+      "h1": "text-3xl md:text-4xl font-bold tracking-tight text-[#f8fafc]",
+      "h2": "text-xl md:text-2xl font-semibold tracking-tight text-[#f8fafc]",
+      "h3": "text-lg font-medium tracking-tight text-[#f8fafc]",
+      "body": "text-sm text-[#94a3b8] leading-relaxed",
+      "labels": "text-xs font-bold uppercase tracking-[0.15em] text-[#64748b]"
+    }
+  },
+  "layout": {
+    "strategy": "Control Room Grid",
+    "sidebar_width": "w-64",
+    "page_padding": "p-6 md:p-8 lg:p-10",
+    "card_padding": "p-6",
+    "gap": "gap-6",
+    "radius": "rounded-xl"
+  },
+  "components": {
+    "surface": "bg-[#1e2130] border border-[#2e3245] rounded-xl shadow-sm",
+    "button_primary": "bg-[#007bff] hover:bg-[#0056b3] text-white font-medium rounded-lg px-4 py-2 transition-colors shadow-[0_0_15px_rgba(0,123,255,0.2)] hover:shadow-[0_0_20px_rgba(0,123,255,0.4)]",
+    "button_secondary": "bg-[#1a1d27] border border-[#2e3245] hover:border-[#3e445e] text-white font-medium rounded-lg px-4 py-2 transition-colors",
+    "master_toggle": "relative inline-flex h-8 w-14 shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007bff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1117] data-[state=checked]:bg-[#10b981] data-[state=unchecked]:bg-[#ef4444] scale-125 origin-left",
+    "table_row": "border-b border-[#2e3245] hover:bg-[#1a1d27]/50 transition-colors",
+    "badge_active": "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#10b981]/10 text-[#10b981] border border-[#10b981]/20",
+    "badge_inactive": "inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20",
+    "input": "flex h-10 w-full rounded-md border border-[#2e3245] bg-[#0f1117] px-3 py-2 text-sm text-white placeholder:text-[#64748b] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#007bff] focus-visible:border-transparent disabled:cursor-not-allowed disabled:opacity-50"
+  },
+  "pages": {
+    "Dashboard": {
+      "layout": "Grid cols-1 md:cols-2 lg:cols-4 for stat cards. Below it, a full-width card for Recent Clients.",
+      "stat_cards": ["Total Clients", "Active Widgets", "Inactive Widgets", "This Month's New Clients"]
+    },
+    "Clients": {
+      "layout": "Full width table view. Top bar contains Search input and 'Add New Client' primary button.",
+      "table_columns": ["Client Name", "Domain", "Plan Tier", "Status", "Date Added", "Actions"]
+    },
+    "ClientDetail": {
+      "layout": "Bento-style 2-column layout (lg:grid-cols-3). Left wide col for details & toggles. Right narrow col for Embed Code & Status.",
+      "sections": [
+        "Master Widget Status Toggle (Visually distinct at top right)",
+        "Client Info (Inputs)",
+        "Widget Settings (Select for Position, Color Picker input)",
+        "Default Profiles (5 toggles)",
+        "Default Features (10 toggles)",
+        "Embed Code Snippet (Readonly code block + copy button)"
+      ]
+    },
+    "EmbedCode": {
+      "layout": "Masonry or Grid of cards. Each card represents a client and contains their embed code snippet.",
+      "interaction": "One-click copy to clipboard with toast success."
+    }
+  },
+  "motion": {
+    "hover": "transition-all duration-200 ease-out",
+    "modal": "Use framer-motion or CSS transitions for smooth scale-in (95% to 100%) and fade-in.",
+    "toggles": "Spring animation on the toggle thumb."
+  },
+  "accessibility_and_testing": {
+    "testing_attributes": "All interactive and key informational elements MUST include a `data-testid` attribute (e.g., data-testid='add-client-btn', data-testid='master-toggle-switch').",
+    "contrast": "Ensure all text meets minimum 4.5:1 ratio against dark backgrounds. Use text-shadow if necessary.",
+    "focus": "focus-visible:ring-2 focus-visible:ring-[#007bff] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0f1117]"
+  },
+  "image_urls": [],
+  "instructions_to_main_agent": [
+    "1. Setup standard React App using .js files (NO TypeScript .tsx files).",
+    "2. Install and configure TailwindCSS with the exact colors defined in this JSON.",
+    "3. Use `lucide-react` for all icons.",
+    "4. Use `sonner` for toast notifications (Green for success, Red for errors).",
+    "5. Do NOT use any images or placeholders. The branding is purely text ('SwiftImpact Solutions').",
+    "6. Build a responsive Sidebar (collapsible on mobile) and a main content area.",
+    "7. Implement Shadcn/UI primitives heavily (Table, Dialog, Switch, Input, Select, Button, Badge) but restyle them precisely to match the dark `#1e2130` and `#0f1117` palette.",
+    "8. Ensure the 'Master Widget Status' toggle on the Client Detail page is oversized and clearly indicates Green/Red states.",
+    "9. Add Empty States for the Clients table (e.g., 'No clients yet — add your first one') with a clear CTA.",
+    "10. Apply `data-testid` to EVERY button, input, toggle, modal, and key component."
+  ]
+}
